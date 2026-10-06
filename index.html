@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>W4 單字闖關｜中山女高 ALL+ 九月第四週</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Huninn&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fffaf0; --bg-glow:#fff1c9; --ink:#2a1f33; --ink-soft:#5a4b66;
+  --card:#ffffff; --card-edge:#ead9a8;
+  --pink:#2a63c4; --pink-soft:#e4eefc; --pink-deep:#1b4596; --on-primary:#ffffff;
+  --gold:#a87a12; --gold-bright:#f3cf6b; --gold-soft:#fcf1d2;
+  --violet:#a8324f; --violet-soft:#fbe9ee;
+  --blue:#7a5a0e; --blue-soft:#fbf2d8;
+  --lava:#e9b949; --ray:rgba(255,226,150,.28); --petal:#ffffff;
+  --f:'Baloo 2','Huninn','PingFang TC','Microsoft JhengHei','Noto Sans TC',system-ui,sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="dark"]{
+  --bg:#141a2e; --bg-glow:#33305a; --ink:#fbf3dd; --ink-soft:#d3c9e0;
+  --card:#1f2742; --card-edge:#0b0f1d;
+  --pink:#8db8ff; --pink-soft:#243659; --pink-deep:#4f7fd0; --on-primary:#0f1630;
+  --gold:#f3cf6b; --gold-bright:#f3cf6b; --gold-soft:#3d3218;
+  --violet:#ff9fb4; --violet-soft:#40243a;
+  --blue:#f3cf6b; --blue-soft:#2e2c45;
+  --lava:#6b5a2a; --ray:rgba(243,207,107,.07); --petal:#c9d8ff; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{
+  margin:0;font-family:var(--f);font-size:19px;line-height:1.55;color:var(--ink);
+  background:
+    radial-gradient(ellipse 120% 50% at 15% -10%, var(--bg-glow), transparent 65%),
+    repeating-conic-gradient(from 200deg at 0% 0%, var(--ray) 0deg 4deg, transparent 4deg 11deg),
+    radial-gradient(ellipse 90% 30% at 50% 108%, color-mix(in srgb, var(--lava) 25%, transparent), transparent 70%),
+    var(--bg);
+  background-color:var(--bg);
+  min-height:100vh;
+}
+button{font-family:inherit;-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.wrap{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:14px 16px 56px}
+
+/* top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;display:flex;align-items:center;gap:8px;
+  padding:10px 16px;background:color-mix(in srgb,var(--bg) 95%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:2px dashed var(--card-edge)}
+.topbar .in{max-width:640px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px}
+.brand{border:none;background:none;color:var(--ink);font-weight:800;font-size:19px;cursor:pointer;padding:4px 2px;margin-right:auto;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 12px;border-radius:999px;background:var(--card);border:2px solid var(--card-edge);font-weight:800;font-size:17px;white-space:nowrap}
+.pill.bump{animation:bump .45s}
+.iconbtn{width:40px;height:40px;flex:none;border-radius:50%;border:2px solid var(--card-edge);background:var(--card);font-size:17px;cursor:pointer;color:var(--ink)}
+
+/* generic */
+.card{position:relative;z-index:1;background:var(--card);border:2.5px solid var(--card-edge);border-radius:26px;padding:20px;box-shadow:0 6px 0 var(--card-edge),0 0 0 6px color-mix(in srgb,var(--gold-bright) 18%,transparent)}
+.btn{font-weight:800;font-size:19px;padding:13px 22px;border-radius:18px;border:none;cursor:pointer;color:var(--ink);transition:transform .08s}
+.btn:active{transform:translateY(3px)}
+.btn.primary{background:var(--pink);color:var(--on-primary);box-shadow:0 5px 0 var(--pink-deep)}
+.btn.gold{background:var(--gold-bright);color:#3b2550;box-shadow:0 5px 0 #b07d10}
+.btn.ghost{background:transparent;color:var(--ink-soft);border:2px solid var(--card-edge)}
+.btn:disabled{opacity:.35;cursor:default}
+.glow{animation:glow 1.6s ease-in-out infinite}
+.crumbs{display:flex;align-items:center;gap:10px;margin:4px 0 12px;font-weight:700;color:var(--ink-soft);font-size:17px}
+.crumbs .btn{padding:6px 14px;font-size:16px}
+.pop{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+.pop-in{animation:popIn .4s cubic-bezier(.3,1.4,.5,1)}
+
+/* hero */
+.hero{display:flex;align-items:center;gap:12px;margin:8px 0 14px}
+.hero h1{margin:0;font-size:clamp(30px,8vw,40px);line-height:1.1;font-weight:800}
+.hero p{margin:4px 0 0;color:var(--ink-soft);font-size:16px}
+.hero .mascot{width:96px;height:96px;flex:none;animation:bob 2.4s ease-in-out infinite}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.stat{background:var(--card);border:2.5px solid var(--card-edge);border-radius:20px;padding:10px;text-align:center;box-shadow:0 4px 0 var(--card-edge)}
+.stat b{display:block;font-size:26px;line-height:1.1}
+.stat span{font-size:14px;color:var(--ink-soft)}
+.enc{text-align:center;color:var(--ink-soft);margin:10px 0 18px;font-size:17px}
+
+/* ribbon progress */
+.ribbon-wrap{margin:6px 0 4px}
+.ribbon-label{display:flex;justify-content:space-between;font-size:15px;font-weight:700;color:var(--ink-soft);margin-bottom:4px}
+.ribbon{position:relative;height:22px;border-radius:999px;background:var(--pink-soft);border:2px solid var(--card-edge)}
+.ribbon .fill{height:100%;border-radius:999px;min-width:22px;
+  background:repeating-linear-gradient(45deg,var(--pink) 0 12px,color-mix(in srgb,var(--pink) 72%,#fff) 12px 24px);box-shadow:inset 0 -3px 0 rgba(0,0,0,.12);
+  transition:width .7s cubic-bezier(.3,1.4,.5,1)}
+.ribbon .goal{position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-size:30px;line-height:1;filter:drop-shadow(0 2px 2px rgba(0,0,0,.2))}
+.ribbon.done .goal{animation:spin 1.2s ease-in-out infinite}
+
+/* level path */
+.levels{position:relative;padding:4px 0}
+.levels::before{content:"";position:absolute;left:50%;top:20px;bottom:20px;border-left:4px dotted color-mix(in srgb,var(--gold) 70%,transparent);transform:translateX(-2px)}
+.level{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:12px;width:92%;padding:14px;margin:0 0 16px;
+  border-radius:22px;background:var(--card);border:2.5px solid var(--card-edge);box-shadow:0 5px 0 var(--card-edge)}
+.levels .level:nth-child(even){margin-left:auto}
+.lv-badge{width:52px;height:52px;flex:none;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:22px;background:var(--violet-soft);color:var(--violet)}
+.level.clear .lv-badge{background:var(--gold-bright);color:#3b2550}
+.level.next{border-color:var(--pink)}
+.level.next .lv-badge{background:var(--pink);color:var(--on-primary);animation:bob 1.6s ease-in-out infinite}
+.lv-body{flex:1;min-width:150px}
+.lv-title{font-weight:800;font-size:19px}
+.lv-words{font-size:15px;color:var(--ink-soft);line-height:1.35}
+.lv-tag{font-size:13px;font-weight:700;color:var(--pink)}
+.lv-btns{display:flex;gap:8px;width:100%}
+.lv-btns button{flex:1;font-size:16px;font-weight:800;padding:9px 10px;border-radius:14px;border:2px solid var(--pink);background:var(--pink-soft);color:var(--ink);cursor:pointer}
+.lv-btns button.q{border-color:var(--blue);background:var(--blue-soft)}
+.homebtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.legend{font-size:14px;color:var(--ink-soft);text-align:center;margin-top:14px}
+
+/* learn card */
+.dots{display:flex;justify-content:center;gap:8px;margin-bottom:12px}
+.dot{width:14px;height:14px;border-radius:50%;background:var(--card-edge);transition:all .3s}
+.dot.done{background:var(--gold-bright)}
+.dot.now{background:var(--pink);width:34px;border-radius:8px}
+.wordrow{display:flex;align-items:center;gap:16px}
+.word{font-size:clamp(32px,9vw,48px);font-weight:800;line-height:1.05;word-break:break-word}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px;font-size:16px}
+.kk{color:var(--ink-soft);font-family:'Lucida Sans Unicode','Arial Unicode MS','Segoe UI',sans-serif}
+.pos{padding:1px 10px;border-radius:999px;background:var(--violet-soft);color:var(--violet);font-weight:700;font-size:14px}
+.lm{font-size:14px;color:var(--blue);font-weight:700;text-decoration:none;border-bottom:2px dotted var(--blue)}
+.speak{flex:none;border:none;cursor:pointer;border-radius:50%;color:var(--on-primary);background:var(--pink);box-shadow:0 5px 0 var(--pink-deep);position:relative}
+.speak.big{width:72px;height:72px;font-size:30px}
+.speak.huge{width:116px;height:116px;font-size:48px;display:block;margin:10px auto}
+.speak:active{transform:translateY(3px);box-shadow:0 2px 0 var(--pink-deep)}
+.talking::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:4px solid var(--pink);animation:ring 1s ease-out infinite}
+.reveal{display:block;width:100%;margin-top:18px;padding:18px;border:3px dashed var(--pink);background:var(--pink-soft);color:var(--ink);border-radius:20px;font-size:20px;font-weight:800;cursor:pointer;animation:breathe 2.2s ease-in-out infinite}
+.zh{margin-top:16px;font-size:30px;font-weight:700;color:var(--pink);line-height:1.3}
+.sec{margin-top:18px;padding-top:14px;border-top:2px dotted var(--card-edge)}
+.sec-t{font-size:16px;color:var(--ink-soft);font-weight:800;margin-bottom:8px}
+.col{display:flex;width:100%;align-items:center;gap:10px;text-align:left;padding:11px 14px;margin-bottom:8px;border-radius:16px;border:2px solid transparent;background:var(--blue-soft);color:var(--ink);cursor:pointer}
+.col-txt{flex:1;display:flex;flex-direction:column}
+.col-en{font-weight:700;font-size:20px;line-height:1.3}
+.col-zh{font-size:16px;color:var(--ink-soft)}
+.mini{font-size:18px}
+mark{background:linear-gradient(transparent 55%,color-mix(in srgb,var(--gold-bright) 60%,transparent) 55%);color:inherit;padding:0 2px;font-weight:800}
+.ex{font-size:21px;line-height:1.75;margin:0}
+.blank{display:inline-block;min-width:116px;padding:0 14px;border-radius:12px;border:2.5px dashed var(--violet);background:var(--violet-soft);color:var(--violet);font-size:19px;font-weight:800;cursor:pointer;animation:wiggle 2.6s ease-in-out infinite;line-height:1.6}
+.ans{display:inline-block;padding:0 10px;border-radius:12px;background:var(--gold-soft);font-weight:800;border-bottom:3px solid var(--gold)}
+.tw{text-decoration:underline wavy var(--pink);text-decoration-thickness:2px;text-underline-offset:6px;font-weight:700}
+.exzh{margin-top:8px;color:var(--ink-soft);font-size:17px}
+.chip{margin-top:10px;font-size:16px;font-weight:800;padding:8px 16px;border-radius:999px;border:2px solid var(--pink);background:var(--pink-soft);color:var(--ink);cursor:pointer}
+.navrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px}
+.hint{color:var(--ink-soft);font-size:16px;text-align:right}
+
+/* quiz */
+.gems{display:flex;justify-content:center;gap:14px;margin:14px 0 4px}
+.gem{width:22px;height:22px;transform:rotate(45deg);border-radius:6px;border:2.5px solid var(--violet);transition:all .4s}
+.gem.g1{background:var(--violet-soft)}
+.gem.g2{background:var(--gold-bright);border-color:var(--gold);box-shadow:0 0 12px var(--gold-bright)}
+.gem-note{text-align:center;font-size:14px;color:var(--ink-soft);margin-bottom:12px}
+.qtype{display:inline-block;font-weight:800;font-size:16px;padding:3px 14px;border-radius:999px;background:var(--blue-soft);color:var(--blue)}
+.qhint{text-align:center;color:var(--ink-soft);margin:4px 0 0}
+.qword{text-align:center;font-size:36px;font-weight:800;margin-top:8px}
+.qword small{display:block;font-size:16px;color:var(--ink-soft);font-weight:500}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.opts.one{grid-template-columns:1fr}
+.opt{position:relative;min-height:66px;padding:12px 24px;border-radius:18px;border:2.5px solid var(--card-edge);background:var(--card);color:var(--ink);font-size:21px;font-weight:700;box-shadow:0 4px 0 var(--card-edge);cursor:pointer;line-height:1.3;text-align:center}
+.opt .k{position:absolute;top:6px;left:10px;font-size:13px;color:var(--ink-soft);font-weight:700}
+.opt:not(:disabled):active{transform:translateY(3px);box-shadow:0 1px 0 var(--card-edge)}
+.opt.right{background:var(--gold-soft);border-color:var(--gold);animation:popbig .5s cubic-bezier(.3,1.6,.5,1)}
+.opt.right::after{content:"✓";position:absolute;right:7px;top:50%;transform:translateY(-50%);font-size:24px;color:var(--gold)}
+.opt.miss{background:var(--violet-soft);border-color:var(--violet);animation:shake .4s}
+.opt.dim{opacity:.5}
+.opt:disabled{cursor:default}
+.fb{display:flex;align-items:center;gap:12px;margin-top:16px;padding:14px;border-radius:20px}
+.fb.yay{background:var(--gold-soft)}
+.fb.hug{background:var(--violet-soft)}
+.fb .mascot{width:66px;height:66px;flex:none}
+.fb b{font-size:20px}
+.fb .sub{font-size:17px;color:var(--ink-soft)}
+.fb .btn{margin-top:8px;padding:10px 18px;font-size:17px}
+
+/* clear */
+.clear-box{text-align:center}
+.clear-box .mascot{width:150px;height:150px;animation:jump 1s ease-in-out infinite}
+.clear-box h2{font-size:34px;margin:6px 0}
+.stars span{display:inline-block;font-size:56px;filter:drop-shadow(0 3px 2px rgba(0,0,0,.15));animation:starIn .6s cubic-bezier(.3,1.6,.5,1) backwards}
+.stars span:nth-child(2){animation-delay:.25s}.stars span:nth-child(3){animation-delay:.5s}
+.recap{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+.recap button{font-size:17px;font-weight:700;padding:8px 14px;border-radius:999px;border:2px solid var(--card-edge);background:var(--card);color:var(--ink);cursor:pointer}
+.bonus{display:inline-block;margin:8px 0;padding:6px 18px;border-radius:999px;background:var(--pink);color:var(--on-primary);font-weight:800;font-size:20px}
+
+/* badges */
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.bdg{text-align:center;padding:16px 10px;border-radius:22px;background:var(--card);border:2.5px solid var(--card-edge);box-shadow:0 4px 0 var(--card-edge)}
+.bdg .ic{font-size:44px;line-height:1.2}
+.bdg b{display:block;font-size:18px}
+.bdg span{font-size:14px;color:var(--ink-soft)}
+.bdg.off .ic{filter:grayscale(1);opacity:.35}
+.bdg.on{border-color:var(--gold)}
+
+/* petals (behind content) */
+.petals{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.petal{position:absolute;top:-30px;width:14px;height:18px;border-radius:70% 0 70% 0;background:var(--petal);
+  box-shadow:0 0 10px color-mix(in srgb,var(--pink) 35%,transparent);opacity:.75;animation:fall linear infinite}
+@keyframes fall{0%{transform:translate(0,-30px) rotate(0)}100%{transform:translate(80px,110vh) rotate(540deg)}}
+/* fx */
+.cf{position:fixed;width:11px;height:14px;border-radius:70% 0 70% 0;pointer-events:none;z-index:99;animation:cf 1.1s ease-out forwards}
+.float{position:fixed;z-index:99;font-weight:800;color:var(--pink);font-size:26px;pointer-events:none;animation:floatUp 1.1s ease-out forwards;text-shadow:0 2px 0 var(--card)}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 72px);z-index:100;display:flex;align-items:center;gap:10px;
+  padding:10px 18px;border-radius:20px;background:var(--card);border:3px solid var(--gold-bright);box-shadow:0 6px 0 var(--card-edge);font-weight:800;animation:toastIn 3s ease forwards;white-space:nowrap}
+.toast .ic{font-size:34px}
+.toast small{display:block;font-weight:500;color:var(--ink-soft);font-size:14px}
+.combo{position:fixed;inset:0;display:grid;place-items:center;pointer-events:none;z-index:98}
+.combo span{font-size:clamp(42px,12vw,64px);font-weight:800;color:var(--pink);-webkit-text-stroke:2px var(--card);animation:comboPop 1.2s ease forwards}
+
+@keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes popIn{0%{transform:translateY(14px) scale(.96);opacity:0}100%{transform:none;opacity:1}}
+@keyframes popbig{0%{transform:scale(.9)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes bump{50%{transform:scale(1.25)}}
+@keyframes bob{50%{transform:translateY(-6px)}}
+@keyframes jump{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-18px) rotate(-6deg)}60%{transform:translateY(0) rotate(4deg)}}
+@keyframes wiggle{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-4deg)}94%{transform:rotate(4deg)}}
+@keyframes breathe{50%{transform:scale(1.02)}}
+@keyframes glow{50%{box-shadow:0 5px 0 var(--pink-deep),0 0 0 8px color-mix(in srgb,var(--pink) 25%,transparent)}}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+@keyframes ring{0%{transform:scale(.9);opacity:1}100%{transform:scale(1.35);opacity:0}}
+@keyframes spin{50%{transform:translateY(-50%) rotate(20deg) scale(1.2)}}
+@keyframes starIn{0%{transform:scale(0) rotate(-90deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes cf{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}}
+@keyframes floatUp{0%{transform:translate(-50%,0) scale(.8);opacity:0}20%{opacity:1;transform:translate(-50%,-10px) scale(1.15)}100%{transform:translate(-50%,-70px);opacity:0}}
+@keyframes toastIn{0%{transform:translate(-50%,-30px);opacity:0}10%,85%{transform:translate(-50%,0);opacity:1}100%{transform:translate(-50%,-20px);opacity:0}}
+@keyframes comboPop{0%{transform:scale(.3);opacity:0}25%{transform:scale(1.15);opacity:1}70%{transform:scale(1);opacity:1}100%{transform:scale(1.1) translateY(-30px);opacity:0}}
+
+@media (max-width:420px){
+  body{font-size:18px}
+  .topbar{padding:8px 10px}
+  .brand{font-size:17px}
+  .pill{padding:2px 9px;font-size:15px}
+  .iconbtn{width:36px;height:36px}
+  .card{padding:16px}
+  .speak.big{width:62px;height:62px;font-size:26px}
+  .opt{font-size:19px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="in">
+  <button class="brand" data-act="home">👑 W4 單字闖關</button>
+  <span class="pill" id="pScore" title="分數">⭐ <span id="sc">0</span></span>
+  <span class="pill" id="pStreak" title="目前連續答對">🔥 <span id="st">0</span></span>
+  <button class="iconbtn" data-act="sound" id="bSound" aria-label="音效開關">🔔</button>
+  <button class="iconbtn" data-act="theme" id="bTheme" aria-label="切換深淺色">🌙</button>
+</div></header>
+<div class="petals" id="petals" aria-hidden="true"></div>
+<main class="wrap" id="app"></main>
+
+<script>
+/* ===================== 單字資料 ===================== */
+const GROUPS = [
+ {name:"聽力暖身", icon:"🎧", words:[
+  {w:"vomit",kk:"/ˋvɑmɪt/",pos:"v.",zh:"嘔吐",cols:[["feel like **vomiting**","想吐"],["**vomit** after eating","吃完東西後吐"]],ex:"Sometimes she {} before she even gets out of bed.",ans:"vomits",exzh:"有時她甚至還沒下床就吐了。"},
+  {w:"aerospace",kk:"/ˋɛrəˌspes/",pos:"n.",zh:"航太（工業）",cols:[["the **aerospace** industry","航太產業"],["an **aerospace** engineer","航太工程師"]],ex:"The Asia-Pacific region has the largest {} plastics market share.",ans:"aerospace",exzh:"亞太地區擁有最大的航太塑膠市場份額。"},
+  {w:"undertake",kk:"/ˌʌndɚˋtek/",pos:"v.",zh:"承擔；接手",cols:[["**undertake** a task","承擔任務"],["**undertake** a project","接下一項計畫"]],ex:"Carter was the only one willing to {} the task.",ans:"undertake",exzh:"卡特是唯一願意承擔這項任務的人。"},
+  {w:"preference",kk:"/ˋprɛfərəns/",pos:"n.",zh:"偏好；喜好",cols:[["a strong **preference** for","對…強烈偏好"],["personal **preference**","個人喜好"]],ex:"Julia has a strong {} for sour candies.",ans:"preference",exzh:"茱莉亞非常偏愛酸味糖果。"},
+  {w:"conduct",kk:"/kənˋdʌkt/",pos:"v.",zh:"進行；執行",cols:[["**conduct** an experiment","進行實驗"],["**conduct** research on","進行…的研究"]],ex:"Ray {} his experiment in front of the whole class.",ans:"conducted",exzh:"雷在全班面前進行了他的實驗。"}
+ ]},
+ {name:"對話高手", icon:"💬", words:[
+  {w:"agony",kk:"/ˋægənɪ/",pos:"n.",zh:"極度痛苦",cols:[["in **agony**","處於極度痛苦中"],["scream in **agony**","痛苦地尖叫"]],ex:"Ruth screamed in {} when she twisted her ankle.",ans:"agony",exzh:"露絲扭傷腳踝時痛得尖叫。"},
+  {w:"stance",kk:"/stæns/",pos:"n.",zh:"立場；態度",cols:[["a **stance** on","對…的立場"],["take a firm **stance**","採取堅定的立場"]],ex:"I'm just curious about your {} on the situation.",ans:"stance",exzh:"我只是好奇你對這件事的立場。"},
+  {w:"secure",kk:"/sɪˋkjʊr/",pos:"v.",zh:"取得；確保",cols:[["**secure** a ticket","弄到一張票"],["**secure** a reservation","確保預訂成功"]],ex:"I was able to {} a ticket at the last minute.",ans:"secure",exzh:"我在最後一刻弄到了一張票。"},
+  {w:"colleague",kk:"/ˋkɑlig/",pos:"n.",zh:"同事",cols:[["a new **colleague**","一位新同事"],["a close **colleague**","親近的同事"]],ex:"Oh, that's a new {} from my department.",ans:"colleague",exzh:"喔，那是我們部門的新同事。"},
+  {w:"anesthesia",kk:"/ˌænəsˋθiʒə/",pos:"n.",zh:"麻醉",cols:[["general **anesthesia**","全身麻醉"],["under **anesthesia**","在麻醉狀態下"]],ex:"[[Although]] modern {} is relatively safe, it does not always work as expected.",ans:"anesthesia",exzh:"雖然現代麻醉相對安全，但不一定總是如預期般有效。"}
+ ]},
+ {name:"字彙衝刺", icon:"🩺", words:[
+  {w:"surgery",kk:"/ˋsɝdʒərɪ/",pos:"n.",zh:"手術",cols:[["undergo **surgery**","接受手術"],["perform **surgery**","進行手術"]],ex:"The patient becomes awake during {} but still cannot move or speak.",ans:"surgery",exzh:"病人在手術中醒來，卻仍然無法移動或說話。"},
+  {w:"terrifying",kk:"/ˋtɛrəˌfaɪɪŋ/",pos:"adj.",zh:"非常可怕的",cols:[["a **terrifying** experience","可怕的經歷"],["absolutely **terrifying**","可怕極了"]],ex:"[[While]] anesthesia awareness is uncommon, it can be {}.",ans:"terrifying",exzh:"雖然麻醉覺醒並不常見，但可能非常可怕。"},
+  {w:"candidate",kk:"/ˋkændəˌdet/",pos:"n.",zh:"應徵者；候選人",cols:[["a qualified **candidate**","合格的人選"],["a strong **candidate** for","…的有力人選"]],ex:"The company interviewed each {} carefully.",ans:"candidate",exzh:"公司仔細面試了每一位應徵者。"},
+  {w:"promptly",kk:"/ˋprɑmptlɪ/",pos:"adv.",zh:"迅速地；立即地",cols:[["respond **promptly**","迅速回應"],["arrive **promptly**","準時抵達"]],ex:"After the emergency call, the firefighters {} headed to the scene.",ans:"promptly",exzh:"接到緊急電話後，消防員立刻趕往現場。"},
+  {w:"landscape",kk:"/ˋlændˌskep/",pos:"n.",zh:"風景；景色",cols:[["a beautiful **landscape**","美麗的景色"],["the natural **landscape**","自然景觀"]],ex:"From the hilltop, we enjoyed a beautiful {} of forests and rivers.",ans:"landscape",exzh:"從山頂上，我們欣賞到森林與河流構成的美景。"}
+ ]},
+ {name:"克漏字攻略", icon:"✨", words:[
+  {w:"luxurious",kk:"/lʌgˋʒʊrɪəs/",pos:"adj.",zh:"奢華的；豪華的",cols:[["a **luxurious** hotel","豪華飯店"],["a **luxurious** design","奢華的設計"]],ex:"Buyers were attracted to its spacious interior and {} design.",ans:"luxurious",exzh:"買家被它寬敞的內裝與奢華的設計吸引。"},
+  {w:"compromise",kk:"/ˋkɑmprəˌmaɪz/",pos:"v.",zh:"妥協；讓步",cols:[["**compromise** on an issue","在議題上妥協"],["reach a **compromise**","達成妥協"]],ex:"Both sides agreed to {} and accept some changes.",ans:"compromise",exzh:"雙方同意妥協並接受一些修改。"},
+  {w:"map out",kk:"/mæp aʊt/",pos:"片語",zh:"詳細規劃",cols:[["**map out** a plan","規劃出計畫"],["**map out** a route","規劃路線"]],ex:"Books inspired him to {} a plan for achieving his goal.",ans:"map out",exzh:"書本啟發他規劃出實現目標的計畫。"},
+  {w:"due to",kk:"/ˋdju tu/",pos:"介",zh:"由於；因為",cols:[["**due to** bad weather","因為天氣惡劣"],["canceled **due to** rain","因雨取消"]],ex:"He was later disqualified {} asthma.",ans:"due to",exzh:"他後來因為氣喘而被取消資格。"},
+  {w:"pay off",kk:"/pe ɔf/",pos:"片語",zh:"（努力）得到回報",cols:[["hard work **pays off**","努力會有回報"],["finally **pay off**","終於有了回報"]],ex:"His persistence finally {} in 2009.",ans:"paid off",exzh:"他的堅持終於在 2009 年有了回報。"}
+ ]},
+ {name:"夢想與堅持", icon:"🚀", words:[
+  {w:"persistence",kk:"/pɚˋsɪstəns/",pos:"n.",zh:"堅持；毅力",cols:[["**persistence** pays off","堅持會有回報"],["with **persistence**","憑著毅力"]],ex:"These accomplishments opened new doors, and his {} finally paid off.",ans:"persistence",exzh:"這些成就開啟了新的機會，他的堅持終於有了回報。"},
+  {w:"setback",kk:"/ˋsɛtˌbæk/",pos:"n.",zh:"挫折",cols:[["suffer a **setback**","遭受挫折"],["a major **setback**","重大挫折"]],ex:"He once described this {} as a valley on his journey.",ans:"setback",exzh:"他曾把這次挫折形容為旅程中的低谷。"},
+  {w:"earn",kk:"/ɝn/",pos:"v.",zh:"（靠努力）取得；贏得",cols:[["**earn** a degree","取得學位"],["**earn** respect","贏得尊重"]],ex:"[[Rather than]] giving up, he went on to {} a medical degree.",ans:"earn",exzh:"他沒有放棄，而是繼續取得了醫學學位。"},
+  {w:"undergo",kk:"/ˌʌndɚˋgo/",pos:"v.",zh:"經歷；接受（手術）",cols:[["**undergo** surgery","接受手術"],["**undergo** changes","經歷改變"]],ex:"Before anesthesia, anyone who {} surgery faced a frightening experience.",ans:"underwent",exzh:"在麻醉發明以前，任何接受手術的人都要面對恐怖的經歷。"},
+  {w:"procedure",kk:"/prəˋsidʒɚ/",pos:"n.",zh:"程序；（醫療）手術",cols:[["a surgical **procedure**","外科手術"],["follow the **procedure**","遵循程序"]],ex:"Their screams were simply part of the {}.",ans:"procedure",exzh:"他們的尖叫只是整個手術過程的一部分。"}
+ ]},
+ {name:"麻醉大突破", icon:"💉", words:[
+  {w:"effective",kk:"/ɪˋfɛktɪv/",pos:"adj.",zh:"有效的",cols:[["highly **effective**","非常有效"],["an **effective** method","有效的方法"]],ex:"[[However]], these approaches were rarely {}.",ans:"effective",exzh:"然而，這些方法很少有效。"},
+  {w:"demonstrate",kk:"/ˋdɛmənˌstret/",pos:"v.",zh:"示範；證明",cols:[["**demonstrate** the use of","示範…的用法"],["**demonstrate** a technique","示範技巧"]],ex:"In 1846, William Morton {} the use of ether as an anesthetic.",ans:"demonstrated",exzh:"1846 年，威廉．莫頓示範了以乙醚作為麻醉劑。"},
+  {w:"confirm",kk:"/kənˋfɝm/",pos:"v.",zh:"證實；確認",cols:[["**confirm** that…","證實…"],["**confirm** a reservation","確認預訂"]],ex:"When the patient woke up, he {} that he had felt no pain.",ans:"confirmed",exzh:"病人醒來後證實自己沒有感到疼痛。"},
+  {w:"breakthrough",kk:"/ˋbrekˌθru/",pos:"n.",zh:"突破；重大進展",cols:[["a major **breakthrough**","重大突破"],["a medical **breakthrough**","醫學突破"]],ex:"News of this remarkable {} spread quickly.",ans:"breakthrough",exzh:"這項非凡突破的消息迅速傳開。"},
+  {w:"awake",kk:"/əˋwek/",pos:"adj.",zh:"醒著的；清醒的",cols:[["remain fully **awake**","保持完全清醒"],["lie **awake**","躺著睡不著"]],ex:"Patients had to remain fully {} while doctors operated on them.",ans:"awake",exzh:"醫生動手術時，病人必須保持完全清醒。"}
+ ]},
+ {name:"旅行與生活", icon:"🧳", words:[
+  {w:"call for",kk:"/kɔl fɔr/",pos:"片語",zh:"需要；呼籲",cols:[["**call for** careful planning","需要仔細規劃"],["**call for** action","呼籲採取行動"]],ex:"An around-the-island trip {} months of preparation.",ans:"calls for",exzh:"環島旅行需要數個月的準備。"},
+  {w:"rite of passage",kk:"/raɪt əv ˋpæsɪdʒ/",pos:"n.",zh:"成年禮；人生重要經歷",cols:[["an important **rite of passage**","重要的成年禮"],["a **rite of passage** into adulthood","邁入成年的里程碑"]],ex:"Many young Australians regard the trip as an important {}.",ans:"rite of passage",exzh:"許多澳洲年輕人把這趟旅行視為重要的成年禮。"},
+  {w:"deposit",kk:"/dɪˋpɑzɪt/",pos:"n.",zh:"訂金；押金",cols:[["pay a **deposit**","支付訂金"],["a $20 **deposit**","20 美元訂金"]],ex:"You need to pay a {} to reserve the room.",ans:"deposit",exzh:"你需要付訂金才能預訂房間。"},
+  {w:"reservation",kk:"/ˌrɛzɚˋveʃən/",pos:"n.",zh:"預訂；預約",cols:[["make a **reservation**","預訂"],["cancel a **reservation**","取消預訂"]],ex:"A $20 deposit is required to secure your {}.",ans:"reservation",exzh:"需要支付 20 美元訂金以確保您的預訂。"},
+  {w:"invigorating",kk:"/ɪnˋvɪgəˌretɪŋ/",pos:"adj.",zh:"令人振奮的；提神的",cols:[["an **invigorating** walk","令人神清氣爽的散步"],["an **invigorating** scent","提神的香氣"]],ex:"Some scents create a calming mood, and others create an {} one.",ans:"invigorating",exzh:"有些香氣營造平靜的氛圍，有些則令人精神振奮。"}
+ ]},
+ {name:"片語大師", icon:"🗺️", words:[
+  {w:"take ~ for granted",say:"take something for granted",lm:"take for granted",kk:"/tek ~ fɔr ˋgræntɪd/",pos:"片語",zh:"把…視為理所當然",cols:[["**take** electricity **for granted**","把電視為理所當然"],["**take** someone **for granted**","不懂得珍惜某人"]],ex:"[[Although]] we may {} today, we should remain grateful.",ans:"take anesthesia for granted",exzh:"雖然我們今天可能把麻醉視為理所當然，但仍應心存感激。"},
+  {w:"grateful",kk:"/ˋgretfəl/",pos:"adj.",zh:"感激的",cols:[["be **grateful** to someone for something","因某事感謝某人"],["deeply **grateful**","深深感激"]],ex:"We should remain {} to the pioneers who made it possible.",ans:"grateful",exzh:"我們應該感謝那些讓它成為可能的先驅。"},
+  {w:"on the spur of the moment",kk:"/ɑn ðə spɝ əv ðə ˋmomənt/",pos:"片語",zh:"臨時起意地",cols:[["decide **on the spur of the moment**","臨時決定"],["a **spur-of-the-moment** trip","說走就走的旅行"]],ex:"Traveling alone lets you change your plans {}.",ans:"on the spur of the moment",exzh:"獨自旅行讓你可以臨時起意改變計畫。"},
+  {w:"at one's own pace",say:"at your own pace",lm:"pace",kk:"/æt wʌnz on pes/",pos:"片語",zh:"依照自己的步調",cols:[["learn **at your own pace**","依自己的步調學習"],["**at a steady pace**","以穩定的步調"]],ex:"Solo travelers can explore destinations {}.",ans:"at their own pace",exzh:"獨旅者可以依照自己的步調探索各地。"},
+  {w:"smooth sailing",kk:"/smuð ˋselɪŋ/",pos:"n.",zh:"一帆風順",cols:[["be **smooth sailing**","進展順利"],["not always **smooth sailing**","不總是一帆風順"]],ex:"[[While]] group trips offer many advantages, they are not always {}.",ans:"smooth sailing",exzh:"雖然團體旅行有很多優點，但並不總是一帆風順。"}
+ ]}
+];
+
+const BADGES = [
+ {id:"first",ic:"🌱",name:"第一步",d:"第一次答對"},
+ {id:"s5",ic:"🔥",name:"小火花",d:"連續答對 5 題"},
+ {id:"s10",ic:"🌟",name:"流星雨",d:"連續答對 10 題"},
+ {id:"s20",ic:"🌈",name:"彩虹連擊",d:"連續答對 20 題"},
+ {id:"comeback",ic:"💪",name:"逆轉勝",d:"把答錯過的字答對"},
+ {id:"ear",ic:"🎧",name:"順風耳",d:"聽音選意答對 20 題"},
+ {id:"perfect",ic:"💎",name:"神準",d:"一關全部一次答對"},
+ {id:"clear1",ic:"🎀",name:"初次通關",d:"通過任何一關"},
+ {id:"half",ic:"🌙",name:"半路英雄",d:"通過 4 關"},
+ {id:"all",ic:"👑",name:"單字女王",d:"8 關全部通關"},
+ {id:"p500",ic:"✨",name:"星光滿滿",d:"累積 500 分"},
+ {id:"p1500",ic:"🏆",name:"閃耀之星",d:"累積 1500 分"}
+];
+const YAY=["太棒了！","好厲害！","完全正確 ✨","你超專心！","耳朵好靈！","答對啦 🎀","記得好牢！","就是這個！"];
+const HUG=["沒關係，再看一次就記住了 💗","差一點點！它等一下會再出現","這也是在學習喔 🌱","這個字有點調皮，我們再練一次！","慢慢來，你做得很好"];
+const ENC=["每次 5 個字，一點點就好 🌱","先聽聲音，再看中文 🎧","答錯不扣分，放心挑戰！","今天也來收集星星吧 ⭐","一關只要幾分鐘，試試看！"];
+
+/* ===================== 狀態 ===================== */
+const KEY="w4vocab-v1", TKEY="w4vocab-theme2";
+const defState=()=>({score:0,streak:0,best:0,badges:{},cleared:{},perfect:{},listenOK:0,seen:{},sound:true});
+function load(){try{const r=localStorage.getItem(KEY);if(r)return Object.assign(defState(),JSON.parse(r));}catch(e){}return defState();}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+let S=load(), V="home", L=null, Q=null;
+const app=document.getElementById("app");
+
+/* ===================== 工具 ===================== */
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const attr=s=>String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;");
+const plain=s=>s.replace(/\*\*/g,"").replace(/\[\[|\]\]/g,"");
+const fmtCol=s=>s.replace(/\*\*(.+?)\*\*/g,"<mark>$1</mark>");
+const fmtTw=s=>s.replace(/\[\[(.+?)\]\]/g,'<span class="tw">$1</span>');
+const full=w=>plain(w.ex).replace("{}",w.ans);
+const reduced=()=>window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ===================== 語音 ===================== */
+let voice=null;
+function pickVoice(){
+  if(!("speechSynthesis" in window))return;
+  const vs=speechSynthesis.getVoices();
+  voice=vs.find(v=>/en[-_]US/i.test(v.lang)&&/Samantha|Google US|Aria|Jenny|Ava|Allison/i.test(v.name))
+     ||vs.find(v=>/en[-_]US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null;
+}
+if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
+let unlocked=false;
+document.addEventListener("pointerdown",()=>{
+  if(unlocked||!("speechSynthesis" in window))return;unlocked=true;
+  try{const u=new SpeechSynthesisUtterance(" ");u.volume=0;speechSynthesis.speak(u);}catch(e){}
+},{once:false});
+function speak(t,rate=.85,btn){
+  if(!("speechSynthesis" in window)){toast("🙏","這個瀏覽器不支援朗讀","換 Chrome 或 Safari 試試");return;}
+  const go=()=>{
+    const u=new SpeechSynthesisUtterance(t);u.lang="en-US";if(voice)u.voice=voice;u.rate=rate;u.pitch=1.05;
+    if(btn){btn.classList.add("talking");u.onend=u.onerror=()=>btn.classList.remove("talking");}
+    speechSynthesis.speak(u);
+  };
+  try{ if(speechSynthesis.speaking||speechSynthesis.pending){speechSynthesis.cancel();setTimeout(go,80);} else go(); }catch(e){}
+}
+
+/* ===================== 音效 ===================== */
+let AC=null;
+function ac(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(AC&&AC.state==="suspended")AC.resume();return AC;}
+function tone(f,t0,d,type="triangle",vol=.14){
+  if(!S.sound)return;const c=ac();if(!c)return;
+  const o=c.createOscillator(),g=c.createGain(),t=c.currentTime+t0;
+  o.type=type;o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+d);
+  o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+d+.05);
+}
+const SFX={
+  ok(){tone(784,0,.18);tone(1047,.09,.22);tone(1319,.18,.32);},
+  soft(){tone(440,0,.25,"sine",.08);tone(392,.14,.3,"sine",.07);},
+  pop(){tone(988,0,.12,"sine",.1);tone(1319,.06,.12,"sine",.08);},
+  win(){[523,659,784,1047,1319,1568].forEach((f,i)=>tone(f,i*.1,.4));},
+  badge(){[1319,1568,2093,2637].forEach((f,i)=>tone(f,i*.07,.28,"sine",.1));}
+};
+
+/* ===================== 特效 ===================== */
+const CF=["#f3cf6b","#e9b949","#2a63c4","#8db8ff","#c2334d","#ffffff","#fff4cf"];
+function burst(x,y,n=22){
+  if(reduced())return;
+  for(let i=0;i<n;i++){
+    const s=document.createElement("span");s.className="cf";
+    const a=Math.random()*Math.PI*2,d=60+Math.random()*130;
+    s.style.left=x+"px";s.style.top=y+"px";s.style.background=rnd(CF);
+    s.style.setProperty("--dx",Math.cos(a)*d+"px");s.style.setProperty("--dy",(Math.sin(a)*d-40)+"px");
+    s.style.setProperty("--r",(Math.random()*720-360)+"deg");
+    if(Math.random()<.35)s.style.borderRadius="50%";
+    document.body.appendChild(s);setTimeout(()=>s.remove(),1200);
+  }
+}
+function bigBurst(){const w=innerWidth;for(let k=0;k<5;k++)setTimeout(()=>burst(w*(.15+.7*Math.random()),innerHeight*(.2+.3*Math.random()),30),k*180);}
+function centerOf(el){if(!el)return[innerWidth/2,innerHeight/2];const r=el.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2];}
+function floatText(t,el){
+  const[x,y]=centerOf(el);const f=document.createElement("div");f.className="float";f.textContent=t;
+  f.style.left=x+"px";f.style.top=(y-20)+"px";document.body.appendChild(f);setTimeout(()=>f.remove(),1150);
+}
+let toastQ=[],toastBusy=false;
+function toast(ic,title,sub){toastQ.push([ic,title,sub]);if(!toastBusy)nextToast();}
+function nextToast(){
+  const it=toastQ.shift();if(!it){toastBusy=false;return;}toastBusy=true;
+  const d=document.createElement("div");d.className="toast";
+  d.innerHTML=`<span class="ic">${it[0]}</span><div>${it[1]}<small>${it[2]||""}</small></div>`;
+  document.body.appendChild(d);setTimeout(()=>{d.remove();nextToast();},3000);
+}
+function combo(t){
+  const d=document.createElement("div");d.className="combo";d.innerHTML=`<span>${t}</span>`;
+  document.body.appendChild(d);setTimeout(()=>d.remove(),1250);
+}
+
+/* ===================== 吉祥物（小星） ===================== */
+let mid=0;
+function mascot(mood="happy",cls=""){
+  const id="mg"+(mid++);
+  const eyes=(mood==="happy"||mood==="cheer")
+   ?`<path d="M45 57 q5 -6 10 0 M65 57 q5 -6 10 0" stroke="#3b2550" stroke-width="3.4" fill="none" stroke-linecap="round"/>`
+   :`<ellipse cx="50" cy="56" rx="4.6" ry="5.6" fill="#2a63c4"/><ellipse cx="70" cy="56" rx="4.6" ry="5.6" fill="#2a63c4"/><circle cx="51.6" cy="53.8" r="1.8" fill="#fff"/><circle cx="71.6" cy="53.8" r="1.8" fill="#fff"/><circle cx="48.6" cy="58.4" r=".9" fill="#bfe0ff"/><circle cx="68.6" cy="58.4" r=".9" fill="#bfe0ff"/>`;
+  const mouth=mood==="cheer"?`<path d="M51 64 Q60 77 69 64 Z" fill="#c7364e"/>`
+   :mood==="wow"?`<ellipse cx="60" cy="67" rx="3.6" ry="4.6" fill="#c7364e"/>`
+   :mood==="think"?`<path d="M54 67 Q60 71 66 66" stroke="#3b2550" stroke-width="3" fill="none" stroke-linecap="round"/>`
+   :`<path d="M53 64 Q60 71 67 64" stroke="#3b2550" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  return `<svg class="mascot ${cls}" viewBox="0 0 120 120" aria-hidden="true"><defs><radialGradient id="${id}" cx="42%" cy="38%" r="65%"><stop offset="0" stop-color="#fff6cf"/><stop offset=".7" stop-color="#f4c94f"/><stop offset="1" stop-color="#d99a1f"/></radialGradient></defs>
+  <path d="M60 20 L71 45 L98 47 L77 64 L85 92 L60 77 L35 92 L43 64 L22 47 L49 45Z" fill="url(#${id})" stroke="#eebd42" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M44 26 L44 8 L52 17 L60 4 L68 17 L76 8 L76 26Z" fill="#f6d46e" stroke="#c9971c" stroke-width="2.5" stroke-linejoin="round"/><circle cx="60" cy="19" r="3.6" fill="#c2334d"/><circle cx="49" cy="21" r="2.2" fill="#2a63c4"/><circle cx="71" cy="21" r="2.2" fill="#2a63c4"/>
+  ${eyes}<ellipse cx="43" cy="64" rx="5" ry="3" fill="#f58fb4" opacity=".85"/><ellipse cx="77" cy="64" rx="5" ry="3" fill="#f58fb4" opacity=".85"/>${mouth}</svg>`;
+}
+
+/* ===================== 分數與徽章 ===================== */
+function updateTop(){
+  document.getElementById("sc").textContent=S.score;
+  document.getElementById("st").textContent=S.streak;
+  document.getElementById("bSound").textContent=S.sound?"🔔":"🔕";
+  document.getElementById("bTheme").textContent=isDark()?"☀️":"🌙";
+}
+function bump(id){const e=document.getElementById(id);e.classList.remove("bump");void e.offsetWidth;e.classList.add("bump");}
+function addScore(n,el){S.score+=n;if(el)floatText("+"+n,el);bump("pScore");updateTop();checkBadges();save();}
+function award(id){
+  if(S.badges[id])return;S.badges[id]=Date.now();save();
+  const b=BADGES.find(x=>x.id===id);if(!b)return;
+  setTimeout(()=>{SFX.badge();toast(b.ic,"獲得徽章：「"+b.name+"」",b.d);},500);
+}
+function checkBadges(){
+  if(S.streak>=5)award("s5");if(S.streak>=10)award("s10");if(S.streak>=20)award("s20");
+  if(S.listenOK>=20)award("ear");if(S.score>=500)award("p500");if(S.score>=1500)award("p1500");
+}
+const clearedCount=()=>GROUPS.filter((_,g)=>S.cleared[g]).length;
+
+/* ===================== 主題 ===================== */
+function isDark(){return document.documentElement.dataset.theme==="dark";}
+try{const t=localStorage.getItem(TKEY);if(t)document.documentElement.dataset.theme=t;}catch(e){}
+
+/* ===================== 畫面：地圖 ===================== */
+function ribbon(p,label,right){
+  return `<div class="ribbon-wrap"><div class="ribbon-label"><span>${label}</span><span>${right}</span></div>
+  <div class="ribbon ${p>=100?"done":""}"><div class="fill" style="width:${Math.max(p,0)}%"></div><span class="goal">👑</span></div></div>`;
+}
+function homeHTML(){
+  const c=clearedCount(),nextG=GROUPS.findIndex((_,g)=>!S.cleared[g]);
+  const nb=Object.keys(S.badges).length;
+  return `
+  <section class="hero">${mascot(c===8?"cheer":"happy")}<div><h1>W4 單字闖關</h1><p>中山女高 ALL+ 九月第四週，8 關 40 個重點字</p></div></section>
+  <div class="stats">
+    <div class="stat"><b>⭐ ${S.score}</b><span>總分</span></div>
+    <div class="stat"><b>🔥 ${S.best}</b><span>最佳連對</span></div>
+    <div class="stat"><b>🏅 ${nb}</b><span>徽章 / ${BADGES.length}</span></div>
+  </div>
+  ${ribbon(c/8*100,"🎀 過關進度",c+" / 8 關")}
+  <p class="enc">${c===8?"全部通關！你是單字女王 👑":rnd(ENC)}</p>
+  <div class="levels">
+  ${GROUPS.map((G,g)=>`
+    <div class="level ${S.cleared[g]?"clear":""} ${g===nextG?"next":""}">
+      <div class="lv-badge">${S.cleared[g]?"⭐":g+1}</div>
+      <div class="lv-body">
+        <div class="lv-title">${G.icon} 第 ${g+1} 關　${G.name}</div>
+        ${g===nextG?'<div class="lv-tag">下一關在這裡！</div>':""}${S.perfect[g]?'<div class="lv-tag">💎 神準通關</div>':""}
+        <div class="lv-words">${G.words.map(w=>w.w).join("、")}</div>
+      </div>
+      <div class="lv-btns"><button data-act="learn" data-g="${g}">📇 看卡片</button><button class="q" data-act="quiz" data-g="${g}">🎯 ${S.cleared[g]?"再挑戰":"直接測驗"}</button></div>
+    </div>`).join("")}
+  </div>
+  <div class="homebtns"><button class="btn gold" data-act="badges">🏅 我的徽章</button><button class="btn ghost" data-act="reset">重新開始</button></div>
+  <p class="legend">例句中 <span class="tw">藍色波浪線</span> 是轉折詞（although、while、however…）</p>`;
+}
+
+/* ===================== 畫面：看卡片 ===================== */
+function startLearn(g){L={g,i:0,steps:[0,0,0,0,0],auto:{}};go("learn");}
+const wL=()=>GROUPS[L.g].words[L.i];
+function exBlank(w,shown){
+  const parts=fmtTw(w.ex).split("{}");
+  const mid=shown?`<span class="ans pop">${w.ans}</span>`:`<button class="blank" data-act="rev-blank" aria-label="點我看答案">？點我</button>`;
+  return parts[0]+mid+parts[1];
+}
+function learnHTML(){
+  const G=GROUPS[L.g],w=wL(),st=L.steps[L.i];
+  const lm="https://www.ldoceonline.com/search/english/direct/?q="+encodeURIComponent(w.lm||w.w);
+  let body="";
+  if(st<1){
+    body=`<button class="reveal" data-act="rev-zh">👀 聽完了嗎？點我看中文</button>`;
+  }else{
+    body=`<div class="zh pop">${w.zh}</div>
+    <div class="sec pop-in"><div class="sec-t">🧩 常用搭配（點一下聽發音）</div>
+      ${w.cols.map(c=>`<button class="col" data-act="say" data-t="${attr(plain(c[0]))}"><span class="col-txt"><span class="col-en">${fmtCol(c[0])}</span><span class="col-zh">${c[1]}</span></span><span class="mini">🔊</span></button>`).join("")}
+    </div>
+    <div class="sec pop-in"><div class="sec-t">📖 例句挖空：猜猜看，再點空格</div>
+      <p class="ex">${exBlank(w,st>=2)}</p>
+      ${st>=2?`<div class="exzh pop">${w.exzh}</div><button class="chip" data-act="say-ex">🔊 再聽一次整句</button>`:""}
+    </div>`;
+  }
+  const last=L.i===G.words.length-1;
+  const nextBtn=st<1?`<span class="hint">先聽發音，再翻開中文 🎧</span>`
+    :last?`<button class="btn primary ${st>=2?"glow":""}" data-act="to-quiz">開始小測驗 🎯</button>`
+         :`<button class="btn primary ${st>=2?"glow":""}" data-act="next">下一個 👉</button>`;
+  return `
+  <div class="crumbs"><button class="btn ghost" data-act="home">🗺️ 地圖</button><span>${G.icon} 第 ${L.g+1} 關・看卡片</span></div>
+  <div class="dots">${G.words.map((_,k)=>`<span class="dot ${k<L.i?"done":k===L.i?"now":""}"></span>`).join("")}</div>
+  <article class="card ${L.fresh?"pop-in":""}">
+    <div class="wordrow">
+      <button class="speak big" data-act="say-word" aria-label="播放單字發音">🔊</button>
+      <div><div class="word">${w.w}</div>
+        <div class="meta"><span class="kk">${w.kk}</span><span class="pos">${w.pos}</span><a class="lm" href="${lm}" target="_blank" rel="noopener">Longman 發音</a></div></div>
+    </div>
+    ${body}
+  </article>
+  <div class="navrow"><button class="btn ghost" data-act="prev" ${L.i===0?"disabled":""}>👈 上一個</button>${nextBtn}</div>`;
+}
+function afterLearnRender(){
+  L.fresh=false;
+  if(L.steps[L.i]===0&&!L.auto[L.i]){
+    L.auto[L.i]=true;const w=wL();
+    setTimeout(()=>{if(V==="learn")speak(w.say||w.w,.8,document.querySelector('[data-act="say-word"]'));},380);
+  }
+}
+
+/* ===================== 畫面：小測驗 ===================== */
+function startQuiz(g){
+  const n=GROUPS[g].words.length;
+  Q={g,queue:shuffle([...Array(n).keys()]),consec:Array(n).fill(0),missed:new Set(),mistakes:0,cur:null,answered:false,last:-1,timer:null,res:null};
+  V="quiz";window.scrollTo(0,0);nextQ();
+}
+const wQ=()=>GROUPS[Q.g].words[Q.cur.wi];
+function nextQ(){
+  clearTimeout(Q.timer);
+  if(Q.consec.every(c=>c>=2))return finishGroup();
+  let wi=Q.queue.shift();
+  if(wi===Q.last&&Q.queue.length){Q.queue.push(wi);wi=Q.queue.shift();}
+  const words=GROUPS[Q.g].words,type=Q.consec[wi]===0?"listen":"fill";
+  const others=shuffle([...Array(words.length).keys()].filter(k=>k!==wi)).slice(0,3);
+  const ids=shuffle([wi,...others]);
+  Q.cur={wi,type,ids,correct:ids.indexOf(wi)};Q.answered=false;Q.res=null;Q.last=wi;Q.fresh=true;
+  render();
+  if(type==="listen"){const w=words[wi];setTimeout(()=>{if(V==="quiz"&&!Q.answered)speak(w.say||w.w,.8,document.querySelector('[data-act="say-q"]'));},400);}
+}
+function answer(k,btn){
+  if(!Q||Q.answered)return;Q.answered=true;
+  const ok=k===Q.cur.correct,wi=Q.cur.wi,w=wQ();
+  const[x,y]=centerOf(btn);
+  if(ok){
+    Q.consec[wi]++;S.streak++;S.best=Math.max(S.best,S.streak);
+    let pts=10;if(S.streak>=3)pts+=5;
+    if(Q.cur.type==="listen")S.listenOK++;
+    award("first");if(Q.missed.has(wi)&&Q.consec[wi]>=2)award("comeback");
+    if(Q.consec[wi]<2)Q.queue.push(wi);
+    Q.res={ok,k,pts,msg:rnd(YAY)};
+    SFX.ok();burst(x,y,20);
+    render();addScore(pts,document.querySelector(".opt.right"));bump("pStreak");
+    if(S.streak===5||S.streak===10||S.streak===15||S.streak===20||(S.streak>20&&S.streak%10===0))setTimeout(()=>combo("🔥 "+S.streak+" 連對！"),250);
+    if(Q.cur.type==="fill")setTimeout(()=>speak(full(w),.9),350);
+    Q.timer=setTimeout(()=>{if(V==="quiz"&&Q.answered)nextQ();},Q.cur.type==="fill"?2800:1500);
+  }else{
+    Q.consec[wi]=0;Q.missed.add(wi);Q.mistakes++;S.streak=0;
+    Q.queue.splice(Math.min(2,Q.queue.length),0,wi);
+    Q.res={ok,k,msg:rnd(HUG)};
+    SFX.soft();render();updateTop();save();
+    setTimeout(()=>speak(w.say||w.w,.8),300);
+  }
+}
+function quizHTML(){
+  const G=GROUPS[Q.g],w=wQ(),words=G.words,c=Q.cur,done=Q.consec.reduce((a,b)=>a+Math.min(b,2),0),total=words.length*2;
+  const optText=i=>c.type==="listen"?words[i].zh:words[i].ans;
+  const opts=c.ids.map((id,k)=>{
+    let cls="opt";
+    if(Q.answered){ if(k===c.correct)cls+=" right"; else if(k===Q.res.k)cls+=" miss"; else cls+=" dim"; }
+    return `<button class="${cls}" data-act="opt" data-k="${k}" ${Q.answered?"disabled":""}><span class="k">${k+1}</span>${optText(id)}</button>`;
+  }).join("");
+  let top;
+  if(c.type==="listen"){
+    top=`<span class="qtype">🎧 聽音選意</span>
+      <button class="speak huge" data-act="say-q" aria-label="再聽一次">🔊</button>
+      ${Q.answered?`<div class="qword pop">${w.w}<small>${w.kk}</small></div>`:`<p class="qhint">聽聽看，它是什麼意思？（可以一直按喇叭）</p>`}`;
+  }else{
+    top=`<span class="qtype">✏️ 例句填空</span>
+      <p class="ex" style="margin-top:14px">${Q.answered?fmtTw(w.ex).replace("{}",`<span class="ans pop">${w.ans}</span>`):fmtTw(w.ex).replace("{}",'<span class="blank" style="animation:none;cursor:default">？</span>')}</p>
+      ${Q.answered?`<div class="exzh pop">${w.exzh}</div><button class="chip" data-act="say-qex">🔊 聽整句</button>`:""}`;
+  }
+  let fb="";
+  if(Q.answered){
+    fb=Q.res.ok
+     ?`<div class="fb yay pop">${mascot("cheer")}<div><b>${Q.res.msg}</b><div class="sub">+${Q.res.pts} 分${S.streak>=3?"（連對加分 🔥）":""}</div><button class="btn primary" data-act="nextq">下一題 👉</button></div></div>`
+     :`<div class="fb hug pop">${mascot("think")}<div><b>${Q.res.msg}</b><div class="sub">記住它：<b>${w.w}</b> ＝ ${w.zh} <button class="chip" style="margin:0 0 0 4px;padding:2px 10px" data-act="say-q">🔊</button></div><button class="btn primary" data-act="nextq">好，繼續 💪</button></div></div>`;
+  }
+  return `
+  <div class="crumbs"><button class="btn ghost" data-act="home">🗺️ 地圖</button><span>${G.icon} 第 ${Q.g+1} 關・小測驗</span></div>
+  ${ribbon(done/total*100,"🎀 過關進度",done+" / "+total)}
+  <div class="gems">${words.map((_,i)=>`<span class="gem g${Math.min(Q.consec[i],2)}" title="${attr(words[i].w)}"></span>`).join("")}</div>
+  <div class="gem-note">每個字「聽音 ＋ 填空」連續答對，寶石就會亮起來 💎</div>
+  <article class="card ${Q.fresh?"pop-in":""}" style="text-align:${c.type==="listen"?"center":"left"}">
+    ${top}
+    <div class="opts ${c.type==="fill"?"one":""}">${opts}</div>
+    ${fb}
+  </article>`;
+}
+function finishGroup(){
+  const g=Q.g;S.cleared[g]=true;
+  if(Q.mistakes===0){S.perfect[g]=true;award("perfect");}
+  award("clear1");if(clearedCount()>=4)award("half");if(clearedCount()===8)award("all");
+  V="clear";window.scrollTo(0,0);render();
+  addScore(50,document.querySelector(".bonus"));SFX.win();bigBurst();
+}
+function clearHTML(){
+  const G=GROUPS[Q.g],nb=Q.g+1<GROUPS.length;
+  const praise=Q.mistakes===0?"一次都沒錯，神準！💎":`你把 ${Q.missed.size} 個難字都練起來了，超有毅力！💪`;
+  return `<div class="card clear-box pop-in">
+    ${mascot("cheer")}
+    <div class="stars"><span>⭐</span><span>⭐</span><span>⭐</span></div>
+    <h2>第 ${Q.g+1} 關 通關！</h2>
+    <div class="bonus">過關獎勵 +50</div>
+    <p>${praise}</p>
+    <div class="sec-t">這一關的 5 個字，點一下再聽一次：</div>
+    <div class="recap">${G.words.map(w=>`<button data-act="say" data-t="${attr(w.say||w.w)}">🔊 ${w.w}</button>`).join("")}</div>
+    <div class="homebtns">
+      ${nb?`<button class="btn primary glow" data-act="learn" data-g="${Q.g+1}">前往第 ${Q.g+2} 關 🚀</button>`:""}
+      <button class="btn gold" data-act="home">🗺️ 回地圖</button>
+      <button class="btn ghost" data-act="quiz" data-g="${Q.g}">再玩一次</button>
+    </div></div>`;
+}
+
+/* ===================== 畫面：徽章 ===================== */
+function badgesHTML(){
+  return `<div class="crumbs"><button class="btn ghost" data-act="home">🗺️ 地圖</button><span>🏅 我的徽章</span></div>
+  <div class="bgrid">${BADGES.map(b=>`<div class="bdg ${S.badges[b.id]?"on":"off"}"><div class="ic">${b.ic}</div><b>${b.name}</b><span>${S.badges[b.id]?b.d:"還沒拿到：<br>"+b.d}</span></div>`).join("")}</div>`;
+}
+
+/* ===================== 路由與事件 ===================== */
+function render(){
+  let h="";
+  if(V==="home")h=homeHTML();else if(V==="learn")h=learnHTML();else if(V==="quiz")h=quizHTML();else if(V==="clear")h=clearHTML();else if(V==="badges")h=badgesHTML();
+  app.innerHTML=h;updateTop();
+  if(V==="learn")afterLearnRender();
+  if(V==="quiz")Q.fresh=false;
+}
+function go(v){V=v;if(v==="learn")L.fresh=true;if(Q)clearTimeout(Q.timer);window.scrollTo(0,0);render();}
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]");if(!b)return;
+  const a=b.dataset.act,g=+b.dataset.g;
+  switch(a){
+    case "home":if("speechSynthesis" in window)speechSynthesis.cancel();go("home");break;
+    case "badges":go("badges");break;
+    case "learn":startLearn(g);break;
+    case "quiz":startQuiz(g);break;
+    case "say":speak(b.dataset.t,.85,b);break;
+    case "say-word":{const w=wL();speak(w.say||w.w,.8,b);break;}
+    case "say-ex":speak(full(wL()),.9,b);break;
+    case "rev-zh":{
+      const w=wL();L.steps[L.i]=1;SFX.pop();
+      const first=!S.seen[w.w+"#z"];S.seen[w.w+"#z"]=1;
+      render();if(first)addScore(2,document.querySelector(".zh"));break;}
+    case "rev-blank":{
+      const w=wL(),[x,y]=centerOf(b);L.steps[L.i]=2;SFX.ok();burst(x,y,14);
+      const first=!S.seen[w.w+"#b"];S.seen[w.w+"#b"]=1;
+      render();if(first)addScore(2,document.querySelector(".ans"));
+      setTimeout(()=>speak(full(w),.9),300);break;}
+    case "next":if(L.i<4){L.i++;L.fresh=true;render();window.scrollTo({top:0,behavior:reduced()?"auto":"smooth"});}break;
+    case "prev":if(L.i>0){L.i--;L.fresh=true;render();}break;
+    case "to-quiz":startQuiz(L.g);break;
+    case "opt":answer(+b.dataset.k,b);break;
+    case "nextq":nextQ();break;
+    case "say-q":{const w=wQ();speak(w.say||w.w,.8,b);break;}
+    case "say-qex":speak(full(wQ()),.9,b);break;
+    case "sound":S.sound=!S.sound;save();updateTop();if(S.sound)SFX.pop();break;
+    case "theme":{const t=isDark()?"light":"dark";document.documentElement.dataset.theme=t;try{localStorage.setItem(TKEY,t);}catch(err){}updateTop();break;}
+    case "reset":if(confirm("要重新開始嗎？分數、過關紀錄和徽章都會清空喔。")){S=defState();save();go("home");}break;
+  }
+});
+document.addEventListener("keydown",e=>{
+  if(V!=="quiz"||!Q)return;
+  if(!Q.answered&&/^[1-4]$/.test(e.key)){const k=+e.key-1;answer(k,document.querySelector(`.opt[data-k="${k}"]`));}
+  else if(Q.answered&&(e.key==="Enter"||e.key===" ")){e.preventDefault();nextQ();}
+});
+(function(){const P=document.getElementById("petals");if(reduced())return;
+  for(let i=0;i<10;i++){const e=document.createElement("span");e.className="petal";
+    e.style.left=(Math.random()*100)+"%";e.style.animationDuration=(11+Math.random()*10)+"s";
+    e.style.animationDelay=(-Math.random()*20)+"s";e.style.transform="scale("+(.6+Math.random()*.6)+")";P.appendChild(e);}})();
+render();
+</script>
+</body>
+</html>
